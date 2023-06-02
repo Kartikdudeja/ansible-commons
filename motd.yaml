@@ -1,0 +1,13 @@
+
+- name: Setup motd
+  hosts: all
+  become: true
+  gather_facts: true
+
+  tasks:
+  - ansible.builtin.template:
+      src: ../templates/motd.j2
+      dest: /etc/motd
+      owner: root
+      group: root
+      mode: 0644

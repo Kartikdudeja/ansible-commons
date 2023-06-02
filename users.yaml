@@ -1,0 +1,22 @@
+
+# create group and add users to the group
+
+- name: "Create group & users"
+  hosts: all
+  become: true
+  vars_files:
+    - ../vars/user-groups.yaml
+
+  tasks:
+  - name: "Create Group"
+    ansible.builtin.group:
+      name: "{{ groupName }}"
+      state: present
+
+  - name: "Create Users"
+    ansible.builtin.user:
+      name: "{{ item }}"
+      state: present
+      group: "{{ groupName }}"
+      append: true
+    loop: "{{ users }}"
